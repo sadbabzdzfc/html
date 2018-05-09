@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Step01_Example.html</title>
+	<style>
+		#myCanvas{
+			border: 1px solid red;
+		}
+	</style>
+</head>
+<body>
+<canvas id="myCanvas" width="400" height="400"></canvas>
+<script>
+	// canvas 의 참조값 얻어오기 
+	var canvas = document.querySelector("#myCanvas");
+	// canvas 에 렌더링 할 context 객체의 참조값 얻어오기 
+	var context = canvas.getContext("2d");
+
+	//외곽선의 색상 
+	context.strokeStyle="red";
+	//선의 굵기 
+	context.lineWidth=10;
+	//선의 끝을 둥글게 
+	context.lineCap="round";
+	//선이 만나는 지점을 둥글게 
+	context.lineJoin="round";
+
+	//경로 시작 
+	context.beginPath();
+	//시작점으로 이동 
+	context.moveTo(0, 0);
+	//이을점 지정1 
+	context.lineTo(400, 400);
+	context.stroke();
+	//경로 마무리
+	context.closePath();
+
+
+	context.strokeStyle="blue";
+
+	//경로 시작 
+	context.beginPath();
+	//시작점으로 이동 
+	context.moveTo(400, 0);
+	//이을점 지정1 
+	context.lineTo(0, 400);
+	context.stroke();
+	//경로 마무리
+	context.closePath();
+
+	//체우는 색 지정 
+	context.fillStyle="#ff00ff";
+	// .fillRect(x, y, width, height)
+	context.fillRect(150, 150, 100, 100);
+</script>		
+</body>
+</html>
