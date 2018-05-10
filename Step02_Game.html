@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Step02_Game.html</title>
+	<link rel="stylesheet" href="css/animate.css"/>
 </head>
 <body>
 <canvas id="myCanvas" width="800" height="500"></canvas>
@@ -163,6 +164,14 @@
 		if(!isReady){//총이 장전 되지 않았으면 
 			return;//함수 끝내기 
 		}
+
+		// canvas 요소에 animate.css 적용하기 
+		$(this)
+		.addClass("animated tada")
+		.one("animationend", function(){
+			$(this).removeClass("animated tada");
+		});
+
 		//총이 장전되지 않았다고 표시하고 
 		isReady=false;
 		//반동값 부여
