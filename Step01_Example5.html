@@ -29,45 +29,27 @@
 	var hourImg=new Image();
 	hourImg.src="images/clock_hour.png";
 
-	//현재 시간
-	var hour=9;
-	var min=30;
-	var sec=5;
-
-	//회전 각도 계산
-	var rSec=sec*6*(Math.PI/180);
-	var rMin=min*6*(Math.PI/180) + 6*(sec/60)*(Math.PI/180); 
-	var rHour=hour*30*(Math.PI/180) + 30*(min/60)*(Math.PI/180);
-	//이미지 로딩된 카운트 
-	var loadingCount=0;
-
-	dialImg.onload=function(){
-		loadingCount++;
-		if(loadingCount==4){//이미지가 모두 로딩 되었으면 
-			drawClock();//시계를 그린다. 
-		}
-	};
-	secImg.onload=function(){
-		loadingCount++;
-		if(loadingCount==4){//이미지가 모두 로딩 되었으면 
-			drawClock();//시계를 그린다. 
-		}
-	};
-	minImg.onload=function(){
-		loadingCount++;
-		if(loadingCount==4){//이미지가 모두 로딩 되었으면 
-			drawClock();//시계를 그린다. 
-		}
-	};
-	hourImg.onload=function(){
-		loadingCount++;
-		if(loadingCount==4){//이미지가 모두 로딩 되었으면 
-			drawClock();//시계를 그린다. 
-		}
-	};
+	
+	//지속적으로 다시 그려 지도록 
+	setInterval(drawClock, 20);
 
 	//시계를 그리는 함수 
 	function drawClock(){
+		//날짜 객체 생성하기
+		var d=new Date();
+		//현재 시간
+		var hour=d.getHours();
+		var min=d.getMinutes();
+		var sec=d.getSeconds();
+
+		//회전 각도 계산
+		var rSec=sec*6*(Math.PI/180);
+		var rMin=min*6*(Math.PI/180) + 6*(sec/60)*(Math.PI/180); 
+		var rHour=hour*30*(Math.PI/180) + 30*(min/60)*(Math.PI/180);
+
+
+		//context 의 현재 상태 저장하기 (default 상태)
+		context.save();
 		context.translate(250, 250);
 		//시계 다이얼 그리기 
 		context.drawImage(dialImg, -150, -150, 300, 300);
@@ -81,6 +63,9 @@
 		//시침 그리기 
 		context.rotate(rHour-rMin);
 		context.drawImage(hourImg, -3, -100, 6, 100);
+
+		//저장된 상태로 context 되돌리기 
+		context.restore();
 	}
 </script>	
 </body>
