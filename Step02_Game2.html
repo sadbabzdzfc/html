@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Step02_Game2.html</title>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="500"></canvas>
+<script src="js/jquery-3.3.1.js"></script>
+<script>
+	var canvas=document.querySelector("#myCanvas");
+	var context=canvas.getContext("2d");
+
+	//배경이미지 로딩하기
+	var backImg=new Image();
+	backImg.src="images/background.jpg";
+
+	//공 이미지 로딩
+	var ballImg=new Image();
+	ballImg.src="images/lotto-ball-1.png";
+
+	var ballX=400, ballY=250;
+	var speedX=5.6, speedY=7.5;
+
+	setInterval(drawScreen, 20);
+
+	function drawScreen(){
+		context.drawImage(backImg, 0, 0, 800, 500);
+		context.drawImage(ballImg, ballX-25, ballY-25, 50, 50);
+
+		moveBall();
+	}
+
+	function moveBall(){
+		ballX += speedX;
+		ballY += speedY;
+
+		//위쪽 혹은 아래쪽 한계점에 다다랏을때 
+		if(ballY >= 475 || ballY <= 25){
+			// y방향 속도의 부호를 반대로 바꾼다. 
+			speedY *= -1;
+		}
+
+		//왼쪽 혹은 오른쪽 한계점에 다다랏을때
+		if(ballX >= 775 || ballX <= 25){
+			// x방향 속도의 부호를 반대로 바꾼다.
+			speedX *= -1;
+		}
+	}
+</script>	
+</body>
+</html>
