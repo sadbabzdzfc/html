@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Step05_WebSql.html</title>
+</head>
+<body>
+<input type="text" id="inputNum" placeholder="번호입력..." />
+<input type="text" id="inputName" placeholder="이름입력..." />
+<input type="text" id="inputAddr" placeholder="주소입력..." />
+<button id="saveBtn">저장</button>
+<button id="loadBtn">목록 불러오기</button>
+<script src="js/jquery-3.3.1.js"></script>
+<script>
+	// .openDatabase(db이름, 버전, 설명, 크기)
+	var db=window.openDatabase("MyDB","1.0","test",1024*1000*10);
+
+	db.transaction(function(dbHelper){
+		//dbHelper.executeSql("DROP TABLE member");
+		// member 라는 이름의 테이블이 존재하지 않으면 만들기 
+		dbHelper.executeSql("CREATE TABLE member(num INTEGER PRIMARY KEY, name TEXT, addr TEXT)");
+	});
+
+	$("#saveBtn").click(function(){
+		//입력한 번호 이름 주소를 읽어와서 
+		var num=$("#inputNum").val();
+		var name=$("#inputName").val();
+		var addr=$("#inputAddr").val();
+		//db 에 저장하는 작업하기 
+		db.transaction(function(dbHelper){
+			var sql="INSERT INTO member (num,name,addr) VALUES(?,?,?)";
+			//.executeSql(실행할 sql문, ? 에 바인딩할 내용, 성공함수, 실패 함수)
+			dbHelper.executeSql(sql, [num,name,addr], success, fail);
+		});
+		function success(){
+			alert("저장했습니다.");
+		}
+		function fail(){
+			alert("실패!");
+		}
+	});
+
+	$("#loadBtn").click(function(){
+		db.transaction(function(dbHelper){
+			dbHelper.executeSql("SELECT num,name,addr FROM member",[], success, fail);
+		});
+
+		function success(dbHelper, rs){
+			console.log(rs);
+			for(var i=0; i<rs.rows.length; i++){
+				// row 는 select 된 정보가 담긴 object 이다. 
+				var row=rs.rows.item(i);
+				console.log(row);
+			}
+		}
+		function fail(){
+			alert("실패!");
+		}
+	});
+</script>	
+</body>
+</html>
