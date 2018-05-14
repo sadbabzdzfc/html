@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Step03_Example2.html</title>
+</head>
+<body>
+<button id="testBtn">테스트</button>
+<p id="myConsole"></p>
+<script src="js/jquery-3.3.1.js"></script>
+<script>
+	// object 에 있는 정보를 localStorage 에 저장하고 싶다면?
+	var mem={num:1, name:"김구라", isMan:true};
+
+	// object 의 정보를 JSON 문자열로 바꾼다. 
+	var jsonMem=JSON.stringify(mem);
+
+	//localStorage 에 저장
+	localStorage.jsonMem=jsonMem;
+
+	//테스트 버튼을 눌렀을때 
+	$("#testBtn").click(function(){
+		//localStorage 에 저장된 json 문자열 읽어와서 
+		var result=localStorage.jsonMem;
+		//사용해 보기 ( JSON => Object )
+		var obj=JSON.parse(result);
+
+		$("#myConsole").text("번호:"+obj.num+" 이름:"+obj.name+" 남자인지 여부:"+obj.isMan);
+	});
+
+</script>
+</body>
+</html>
